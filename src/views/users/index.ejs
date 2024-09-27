@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Unicesumar Lista de Usuarios</title>
+</head>
+<body>
+    <div>
+        <h1>Lista de Usuarios</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Papel</th>
+                    <th>Status</th>
+                    <th>Data de cadastro</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (users.length > 0) { %>
+                    <% users.forEach(user => { %>
+                        <tr>
+                            <td><%= user.id %></td>
+                            <td><%= user.name %></td>
+                            <td><%= user.email %></td>
+                            <td><%= user.papel %></td>
+                            <td><%= user.fl_ativo ? 'desativado':'ativo'; %></td>
+                            <td><%= user.created_at %></td> 
+                            <td>
+                                <form id="deleteForm" action="/users/<%= user.id %>/delete/" method="post">
+                                    <button type="button" onclick="confirmDelete()">Excluir</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }) %>
+
+                <%} else {%>
+                <tr>
+                    <td colspan="4">Nenhum usuário foi cadastrado</td>
+                </tr>
+                <% } %>
+                        </tr>
+            </tbody>
+        </table>
+        <a href="/users/form">Adicionar</a>
+        <a href="/">Ultimas postagens!</a>
+    </div>
+</body>
+<script>
+    function confirmDelete() {
+        if (confirm("Você tem certeza que deseja apagar esse cadastro de usuário?")) {
+            document.getElementById("deleteForm").submit();
+        }
+    }
+</script>
+</html>

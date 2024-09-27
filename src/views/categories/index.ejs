@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Unicesumar - Lista de Categorias</title>
+</head>
+<body>
+    <div>
+        <h1>Lista de Categorias</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nome</th>
+                    <th>Data do Cadastro</th>
+                    <th>Ações relacionadas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (categories.length > 0) { %>
+                    <% categories.forEach(category => { %>
+                        <tr>
+                            <td><%= category.id %></td>
+                            <td><%= category.name %></td>
+                            <td><%= category.created_at %></td>
+                            <td>
+                                <form id="deleteForm" action="/categories/delete/<%= category.id %>" method="post">
+                                    <button type="button"onclick="confirmDelete()">Excluir</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }) %>
+
+                <%} else {%>
+                <tr>
+                    <td colspan="4">Nenhuma categoria foi cadastrada aos poss</td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+        <a href="/categories/form" class="btn btn-primary mt-3">Adicionar</a>
+        <a href="/" class="btn btn-secondary mt-3">Ultimas Postagens</a>
+    </div>
+    <script>
+         function confirmDelete() {
+            if (confirm("Você tem certeza que deseja retirar esta categoria que foi adicionada?")) {
+                document.getElementById("deleteForm").submit();
+            }
+        }
+    </script>
+</body>
+</html>
